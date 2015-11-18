@@ -24,18 +24,18 @@ public class Dijkstra {
     public static void main(String[] args) throws FileNotFoundException {
         class AdjEle{
             private int vert;
-            private int dist;
+            private int weight;
             
-            AdjEle(int vert, int dist){
+            AdjEle(int vert, int weight){
                 this.vert = vert;
-                this.dist = dist;
+                this.weight = weight;
             }
             
             int getVert(){
                 return vert;
             }     
-            int getDist(){
-                return dist;
+            int getWeight(){
+                return weight;
             }
             
         }
@@ -123,7 +123,26 @@ public class Dijkstra {
             while(!pQueue.isEmpty())
             {
                 Node curr = pQueue.poll();
+                int u = curr.getVert();
+                int uDist = curr.getDist();
                 visitedNodes.add(curr);
+                for(int j = 0; j < adjList[u].size(); j++)
+                {
+                    AdjEle v = (AdjEle) adjList[u].get(j);
+                    int vDist = nodes[v.getVert()].getDist();
+                    int uvWeight = v.getWeight();
+                    if(uDist + uvWeight < vDist){
+                        nodes[v.getVert()].setDist(uDist + uvWeight);
+                        nodes[v.getVert()].setParent(u);
+                    }
+                }
+            }
+            
+            //Output
+            for(int j=1; j < nodes.length; j++){
+                if(startNode != j){
+                System.out.print( nodes[j].getDist() + " ");
+                }
             }
         }
     }
