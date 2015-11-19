@@ -69,16 +69,16 @@ public class Dijkstra {
             @Override
             public int compareTo(Object o) {
                 Node temp = (Node) o;
-                if (dist > temp.getDist())
+                if (this.dist > temp.getDist())
                     return 1;
-                else if (dist == temp.getDist())
+                else if (this.dist == temp.getDist())
                     return 0;
                 else
                     return -1;
             }
         }
         
-        System.out.print("STDIN: ");
+        //System.out.print("STDIN: ");
         //Scanner scan = new Scanner(System.in);   
         Scanner scan = new Scanner(new File("SampleInput.txt"));
         int numGraphs = scan.nextInt();
@@ -141,9 +141,13 @@ public class Dijkstra {
             //Output
             for(int j=1; j < nodes.length; j++){
                 if(startNode != j){
-                System.out.print( nodes[j].getDist() + " ");
+                    if( nodes[j].getDist() == Integer.MAX_VALUE)
+                        System.out.print( "-1" + " ");
+                    else
+                        System.out.print( nodes[j].getDist() + " ");
                 }
             }
+            System.out.print("\n ");
         }
     }
     
