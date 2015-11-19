@@ -69,12 +69,13 @@ public class Dijkstra {
             @Override
             public int compareTo(Object o) {
                 Node temp = (Node) o;
-                if (this.dist > temp.getDist())
-                    return 1;
-                else if (this.dist == temp.getDist())
-                    return 0;
-                else
-                    return -1;
+                return Integer.compare(this.dist, temp.getDist() );
+//                if (this.dist > temp.getDist())
+//                    return 1;
+//                else if (this.dist == temp.getDist())
+//                    return 0;
+//                else
+//                    return -1;
             }
         }
         
