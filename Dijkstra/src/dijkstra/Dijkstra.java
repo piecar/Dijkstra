@@ -70,12 +70,6 @@ public class Dijkstra {
             public int compareTo(Object o) {
                 Node temp = (Node) o;
                 return Integer.compare(this.dist, temp.getDist() );
-//                if (this.dist > temp.getDist())
-//                    return 1;
-//                else if (this.dist == temp.getDist())
-//                    return 0;
-//                else
-//                    return -1;
             }
         }
         
@@ -126,29 +120,35 @@ public class Dijkstra {
                 Node curr = pQueue.poll();
                 int u = curr.getVert();
                 int uDist = curr.getDist();
-                visitedNodes.add(curr);
-                for(int j = 0; j < adjList[u].size(); j++)
+                if(uDist != Integer.MAX_VALUE)
                 {
-                    AdjEle v = (AdjEle) adjList[u].get(j);
-                    int vDist = nodes[v.getVert()].getDist();
-                    int uvWeight = v.getWeight();
-                    if(uDist + uvWeight < vDist){
-                        nodes[v.getVert()].setDist(uDist + uvWeight);
-                        nodes[v.getVert()].setParent(u);
+                    visitedNodes.add(curr);
+                    for(int j = 0; j < adjList[u].size(); j++)
+                    {
+                        AdjEle v = (AdjEle) adjList[u].get(j);
+                        int vDist = nodes[v.getVert()].getDist();
+                        int uvWeight = v.getWeight();
+                        if(uDist + uvWeight < vDist){
+                            pQueue.remove(nodes[v.getVert()]);
+                            nodes[v.getVert()].setDist(uDist + uvWeight);
+                            nodes[v.getVert()].setParent(u);
+                            pQueue.add(nodes[v.getVert()]);
+                        }
                     }
+                }
+                else
+                {
+                    nodes[u].setDist(-1);
                 }
             }
             
             //Output
             for(int j=1; j < nodes.length; j++){
                 if(startNode != j){
-                    if( nodes[j].getDist() == Integer.MAX_VALUE)
-                        System.out.print( "-1" + " ");
-                    else
                         System.out.print( nodes[j].getDist() + " ");
                 }
             }
-            System.out.print("\n ");
+            System.out.println();
         }
     }
     
